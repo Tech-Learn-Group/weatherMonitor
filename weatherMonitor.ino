@@ -12,9 +12,9 @@
 
 
 // Constants
-#define DHTPIN 2 // The Pin we connect to.
-#define DHTTYPE DHT22 // DHT 22 (AM2302)
-DHT dht(DHTPIN, DHTTYPE); // Initialize DHT sensor for normal 16mhz arduino
+#define DHTPIN 2; // The Pin we connect to.
+#define DHTTYPE DHT22; // DHT 22 (AM2302)
+DHT dht(DHTPIN, DHTTYPE);; // Initialize DHT sensor for normal 16mhz arduino
 
 
 // Connect pin 1 (on the left) of the sensor to +5V
@@ -89,39 +89,39 @@ void loop() {
                 Serial.print(" *C ");
         }
         // Start the module
-        SigFox.begin();
+        SigFox.begin()
         // Wait at least 30ms after first configuration (100ms before)
-        delay(100);
+        delay(100)
 
         // We can only read the module temperature before SigFox.end()
-        t = SigFox.internalTemperature();
-        msg.moduleTemperature = convertoFloatToInt16(t, 60, -60);
+        t = SigFox.internalTemperature()
+        msg.moduleTemperature = convertoFloatToInt16(t, 60, -60)
 
         // Clears all pending interrupts
-        SigFox.status();
+        SigFox.status()
         delay(1);
 
         SigFox.beginPacket();
-        SigFox.write((uint8_t*)&msg, 12);
+        SigFox.write((uint8_t*)&msg, 12)
 
-        msg.lastMessageStatus = SigFox.endPacket();
+        msg.lastMessageStatus = SigFox.endPacket()
 
         SigFox.end();
         //Sleep for 5 minutes
-        LowPower.sleep(SLEEPTIME);
+        LowPower.sleep(SLEEPTIME)
 }
 
 void reboot() {
-        NVIC_SystemReset();
+        NVIC_SystemReset()
         while (1) ;
 }
 
 int16_t convertoFloatToInt16(float value, long max, long min) {
         float conversionFactor = (float) (INT16_t_MAX) / (float)(max - min);
-        return (int16_t)(value * conversionFactor);
+        return (int16_t)(value * conversionFactor)
 }
 
 uint16_t convertoFloatToUInt16(float value, long max) {
         float conversionFactor = (float) (UINT16_t_MAX) / (float)(max);
-        return (uint16_t)(value * conversionFactor);
+        return (uint16_t)(value * conversionFactor)
 }
